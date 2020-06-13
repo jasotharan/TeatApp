@@ -32,7 +32,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
 
         public final View mView;
 
-        TextView txtTitle,userId;
+        TextView txtTitle,userId,shortDescriptionTV;
         private ImageView coverImage;
 
         CustomViewHolder(View itemView) {
@@ -40,6 +40,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
             mView = itemView;
 
             txtTitle = mView.findViewById(R.id.userNameTView);
+            shortDescriptionTV = mView.findViewById(R.id.shortDescriptionTV);
             userId = mView.findViewById(R.id.userId);
             coverImage = mView.findViewById(R.id.userImageView);
         }
@@ -63,6 +64,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     public void onBindViewHolder(CustomViewHolder holder, final int position) {
         holder.txtTitle.setText(dataList.get(position).getTitle());
         holder.userId.setText(dataList.get(position).getId().toString());
+        holder.shortDescriptionTV.setText(dataList.get(position).getTitle().toString());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
