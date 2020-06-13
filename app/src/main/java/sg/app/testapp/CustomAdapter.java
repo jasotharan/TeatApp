@@ -15,15 +15,15 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import sg.app.testapp.model.User;
+import sg.app.testapp.model.Article;
 
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomViewHolder> {
 
-    private List<User> dataList;
+    private List<Article> dataList;
     private Context context;
 
-    public CustomAdapter(Context context,List<User> dataList){
+    public CustomAdapter(Context context,List<Article> dataList){
         this.context = context;
         this.dataList = dataList;
     }
@@ -54,17 +54,17 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         return new CustomViewHolder(view);
     }
 
-    private void showDetailsPage(User user) {
+    private void showDetailsPage(Article article) {
         Intent intent = new Intent(context, Details2Activity.class);
-        intent.putExtra("selectedUser", user);
+        intent.putExtra("selectedArticle", article);
         context.startActivity(intent);
     }
 
     @Override
     public void onBindViewHolder(CustomViewHolder holder, final int position) {
         holder.txtTitle.setText(dataList.get(position).getTitle());
-        holder.userId.setText(dataList.get(position).getId().toString());
-        holder.shortDescriptionTV.setText(dataList.get(position).getTitle().toString());
+        holder.userId.setText(dataList.get(position).getLast_update());
+        holder.shortDescriptionTV.setText(dataList.get(position).getShort_description());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,11 +74,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         });
         Picasso.Builder builder = new Picasso.Builder(context);
         builder.downloader(new OkHttp3Downloader(context));
-        builder.build().load(dataList.get(position).getThumbnailUrl())
+        builder.build().load(dataList.get(position).getAvatar())
                 .placeholder((R.drawable.ic_launcher_background))
                 .error(R.drawable.ic_launcher_background)
                 .into(holder.coverImage);
-
 
     }
 

@@ -10,16 +10,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
-import sg.app.testapp.model.User;
+import sg.app.testapp.model.Article;
 
 public class Details2Activity extends AppCompatActivity {
     private Context mContext;
-    private User selectedUser;
+    private Article selectedArticle;
     private Button saveUser;
     private ImageView userImageView;
     private TextView userLongText,toolbar_edit,toolbar_cancel;
@@ -35,13 +34,13 @@ public class Details2Activity extends AppCompatActivity {
 
         mContext = this;
         Bundle bundle = getIntent().getExtras();
-        selectedUser = (User) bundle.getSerializable("selectedUser");
+        selectedArticle = (Article) bundle.getSerializable("selectedArticle");
         initUIComponents();
 
         // add back arrow to toolbar
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle("Title");
+            getSupportActionBar().setTitle(selectedArticle.getTitle());
         }
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +48,6 @@ public class Details2Activity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
 
     }
 
@@ -60,7 +58,7 @@ public class Details2Activity extends AppCompatActivity {
         saveUser = findViewById(R.id.save_user);
         userLongText = findViewById(R.id.user_long_text);
         userLongEditText = findViewById(R.id.user_long_edit_text);
-        userLongText.setText(selectedUser.getTitle());
+        userLongText.setText(selectedArticle.getShort_description());
         saveUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,7 +74,7 @@ public class Details2Activity extends AppCompatActivity {
         });
         Picasso.Builder builder = new Picasso.Builder(mContext);
         builder.downloader(new OkHttp3Downloader(mContext));
-        builder.build().load(selectedUser.getUrl())
+        builder.build().load(selectedArticle.getAvatar())
                 .placeholder((R.drawable.ic_launcher_background))
                 .error(R.drawable.ic_launcher_background)
                 .into(userImageView);
