@@ -28,6 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_marginEnd="20dp"
+            android:visibility="gone"
             android:onClick="saveCancel"
             android:text="Cancel" />
     </androidx.appcompat.widget.Toolbar>
