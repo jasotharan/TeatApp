@@ -6,6 +6,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 import sg.app.testapp.model.Article;
 
 /**
@@ -16,9 +17,9 @@ interface APIInterface {
 
 
     @GET("/photos")
-    Call<List<Article>> getAllPhotos();
+    Call<List<Article>> getAllArticle();
 
-//    @GET("/api/users?")
-//    Call<UserList> doGetUserList(@Query("page") String page);
+    @GET("/article?")
+    Call<Article> getSelectedArticle(@Query("id") String id);
 
 }

@@ -22,10 +22,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import sg.app.testapp.model.Article;
 
+
 public class MainActivity extends AppCompatActivity {
     private CustomAdapter adapter;
     private RecyclerView recyclerView;
-    ProgressDialog progressDoalog;
+    ProgressDialog progressDialog;
     Context mContext;
 
     @Override
@@ -34,28 +35,37 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mContext = this;
 
-        progressDoalog = new ProgressDialog(MainActivity.this);
-        progressDoalog.setMessage("Loading....");
-        progressDoalog.show();
+        progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog.setMessage("Loading....");
+        progressDialog.show();
 
         /*Create handle for the RetrofitInstance interface*/
         APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
 
-        Call<List<Article>> call = apiInterface.getAllPhotos();
+        Call<List<Article>> call = apiInterface.getAllArticle();
         call.enqueue(new Callback<List<Article>>() {
             @Override
             public void onResponse(Call<List<Article>> call, Response<List<Article>> response) {
-                progressDoalog.dismiss();
+                progressDialog.dismiss();
                 if (response.body() != null) {
                     generateDataList(response.body());
-                } else {
+
+                    // save list in local session
+                    CommonApi.saveStoresList(mContext, response.body());
+
+                } else if  (CommonApi.getStoresList(mContext)!=null){
+                    // network response null show last save data
+                    generateDataList(CommonApi.getStoresList(mContext));
+                }else {
+                    // get mock data and show for sample app
                     generateDataList(getSampleList());
+                    CommonApi.saveStoresList(mContext, getSampleList());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Article>> call, Throwable t) {
-                progressDoalog.dismiss();
+                progressDialog.dismiss();
                 Toast.makeText(MainActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });

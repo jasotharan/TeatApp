@@ -3,6 +3,7 @@ package sg.app.testapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
@@ -10,10 +11,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import sg.app.testapp.model.Article;
 
 public class Details2Activity extends AppCompatActivity {
@@ -23,6 +30,7 @@ public class Details2Activity extends AppCompatActivity {
     private ImageView userImageView;
     private TextView userLongText,toolbar_edit,toolbar_cancel;
     private EditText userLongEditText;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +39,36 @@ public class Details2Activity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        progressDialog = new ProgressDialog(Details2Activity.this);
+        progressDialog.setMessage("Loading....");
+        progressDialog.show();
 
         mContext = this;
         Bundle bundle = getIntent().getExtras();
         selectedArticle = (Article) bundle.getSerializable("selectedArticle");
         initUIComponents();
+
+        /*Create handle for the RetrofitInstance interface*/
+        APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+
+        Call<Article> call = apiInterface.getSelectedArticle("2");
+        call.enqueue(new Callback<Article>() {
+            @Override
+            public void onResponse(Call<Article> call, Response<Article> response) {
+                progressDialog.dismiss();
+                if (response.body() != null) {
+                  //  generateDataList(response.body());
+                } else {
+                    Toast.makeText(Details2Activity.this, "null response ...Please try later!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Article> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(Details2Activity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // add back arrow to toolbar
         if (getSupportActionBar() != null) {
