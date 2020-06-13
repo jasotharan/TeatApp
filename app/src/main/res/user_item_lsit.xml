@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/country_name"
+        tools:text="@string/select_country"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/browntt_regular"
+        android:textSize="@dimen/text_size"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="@+id/storeImageView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/store_guideline"
+        android:layout_width="1dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".85" />
+
+    <ImageView
+        android:id="@+id/storeImageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/country_name" />
+
+    <TextView
+        android:id="@+id/storeNameTView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:textSize="@dimen/text_size"
+        app:layout_constraintEnd_toEndOf="@+id/store_guideline"
+        app:layout_constraintStart_toEndOf="@+id/storeImageView"
+        app:layout_constraintTop_toTopOf="@id/storeImageView"
+        tools:text="building" />
+
+    <TextView
+        android:id="@+id/storeCityTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:textSize="@dimen/text_size"
+        android:ellipsize="end"
+        app:layout_constraintEnd_toEndOf="@+id/store_guideline"
+        app:layout_constraintStart_toStartOf="@id/storeNameTView"
+        app:layout_constraintTop_toBottomOf="@id/storeNameTView"
+        tools:text="city" />
+    <TextView
+        android:id="@+id/storeDistanceTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textSize="@dimen/text_size_14sp"
+        android:textColor="@color/theme"
+        app:layout_constraintEnd_toEndOf="@+id/store_guideline"
+        app:layout_constraintStart_toStartOf="@id/storeNameTView"
+        app:layout_constraintTop_toBottomOf="@id/storeCityTV"
+        tools:text="city" />
+    <ImageView
+        android:id="@+id/selection_imgView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintStart_toEndOf="@+id/store_guideline"
+        app:layout_constraintTop_toTopOf="@id/storeImageView"
+        app:srcCompat="@mipmap/ic_storetick" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
