@@ -1,6 +1,7 @@
 package sg.app.testapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,6 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
@@ -32,7 +32,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
 
         public final View mView;
 
-        TextView txtTitle;
+        TextView txtTitle,userId;
         private ImageView coverImage;
 
         CustomViewHolder(View itemView) {
@@ -40,6 +40,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
             mView = itemView;
 
             txtTitle = mView.findViewById(R.id.userNameTView);
+            userId = mView.findViewById(R.id.userId);
             coverImage = mView.findViewById(R.id.userImageView);
         }
     }
@@ -48,13 +49,27 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.user_item_list, parent, false);
+
         return new CustomViewHolder(view);
     }
 
-    @Override
-    public void onBindViewHolder(CustomViewHolder holder, int position) {
-        holder.txtTitle.setText(dataList.get(position).getTitle());
+    private void showDetailsPage(User user) {
+        Intent intent = new Intent(context, Details2Activity.class);
+        intent.putExtra("selectedUser", user);
+        context.startActivity(intent);
+    }
 
+    @Override
+    public void onBindViewHolder(CustomViewHolder holder, final int position) {
+        holder.txtTitle.setText(dataList.get(position).getTitle());
+        holder.userId.setText(dataList.get(position).getId().toString());
+
+        holder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDetailsPage(dataList.get(position));
+            }
+        });
         Picasso.Builder builder = new Picasso.Builder(context);
         builder.downloader(new OkHttp3Downloader(context));
         builder.build().load(dataList.get(position).getThumbnailUrl())
