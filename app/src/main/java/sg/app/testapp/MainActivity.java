@@ -46,8 +46,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Article>> call, Response<List<Article>> response) {
                 progressDoalog.dismiss();
-                //generateDataList(response.body());
-                generateDataList(getSampleList());
+                if (response.body() != null) {
+                    generateDataList(response.body());
+                } else {
+                    generateDataList(getSampleList());
+                }
             }
 
             @Override

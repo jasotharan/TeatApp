@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 class APIClient {
 
     private static Retrofit retrofit = null;
-    private static final String BASE_URL = "https://jsonplaceholder.typicode.com";
+    private static final String BASE_URL = "http://jsonviewer.stack.hu/";
 
     static Retrofit getClient() {
 
