@@ -55,9 +55,11 @@ public class MainActivity extends AppCompatActivity {
 
                 } else if  (CommonApi.getStoresList(mContext)!=null){
                     // network response null show last save data
+                    Toast.makeText(MainActivity.this, "showing local session data", Toast.LENGTH_SHORT).show();
                     generateDataList(CommonApi.getStoresList(mContext));
                 }else {
                     // get mock data and show for sample app
+                    Toast.makeText(MainActivity.this, "showing mock for test app", Toast.LENGTH_SHORT).show();
                     generateDataList(getSampleList());
                     CommonApi.saveStoresList(mContext, getSampleList());
                 }
