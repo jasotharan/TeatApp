@@ -12,6 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jakewharton.picasso.OkHttp3Downloader;
+import com.squareup.picasso.Picasso;
+
 import sg.app.testapp.model.User;
 
 public class Details2Activity extends AppCompatActivity {
@@ -38,8 +41,6 @@ public class Details2Activity extends AppCompatActivity {
         // add back arrow to toolbar
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            //  getSupportActionBar().setDisplayShowHomeEnabled(false);
-            // getSupportActionBar().setDisplayShowTitleEnabled(false);
             getSupportActionBar().setTitle("Title");
         }
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -69,6 +70,12 @@ public class Details2Activity extends AppCompatActivity {
 
             }
         });
+        Picasso.Builder builder = new Picasso.Builder(mContext);
+        builder.downloader(new OkHttp3Downloader(mContext));
+        builder.build().load(selectedUser.getUrl())
+                .placeholder((R.drawable.ic_launcher_background))
+                .error(R.drawable.ic_launcher_background)
+                .into(userImageView);
     }
 
     public void editUser(View v) {

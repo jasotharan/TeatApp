@@ -77,6 +77,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
                 .error(R.drawable.ic_launcher_background)
                 .into(holder.coverImage);
 
+
     }
 
     @Override
