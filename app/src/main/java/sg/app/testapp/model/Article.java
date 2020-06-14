@@ -3,6 +3,7 @@ package sg.app.testapp.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 
 public class Article implements Serializable {
@@ -63,4 +64,12 @@ public class Article implements Serializable {
     public void setLast_update(String last_update) {
         this.last_update = last_update;
     }
+
+    public static Comparator<Article> SortOrderArticle = new Comparator<Article>() {
+        @Override
+        public int compare(Article group1, Article group2) {
+            //for ascending
+            return Long.compare(Long.valueOf(group2.getLast_update()), Long.valueOf(group1.getLast_update()));
+        }
+    };
 }

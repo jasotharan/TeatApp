@@ -1,6 +1,7 @@
 package sg.app.testapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mContext = this;
+        Toolbar toolbar = findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
 
         progressDialog = new ProgressDialog(MainActivity.this);
         progressDialog.setMessage("Loading....");
@@ -55,26 +58,31 @@ public class MainActivity extends AppCompatActivity {
 
                 } else if  (CommonApi.getStoresList(mContext)!=null){
                     // network response null show last save data
-                    Toast.makeText(MainActivity.this, "showing local session data", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "showing local session data", Toast.LENGTH_LONG).show();
                     generateDataList(CommonApi.getStoresList(mContext));
                 }else {
                     // get mock data and show for sample app
-                    Toast.makeText(MainActivity.this, "showing mock for test app", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "showing mock for test app", Toast.LENGTH_LONG).show();
                     generateDataList(getSampleList());
-                    CommonApi.saveStoresList(mContext, getSampleList());
+                   // CommonApi.saveStoresList(mContext, getSampleList());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Article>> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(MainActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "showing mock for test app", Toast.LENGTH_LONG).show();
+                generateDataList(getSampleList());
+                CommonApi.saveStoresList(mContext, getSampleList());
+                Toast.makeText(MainActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_LONG).show();
             }
         });
     }
 
     /*Method to generate List of data using RecyclerView with custom adapter*/
     private void generateDataList(List<Article> articleList) {
+        Collections.sort(articleList, Article.SortOrderArticle); //   short oder by last updated date
+
         recyclerView = findViewById(R.id.customRecyclerView);
         adapter = new CustomAdapter(this, articleList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);

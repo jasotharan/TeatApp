@@ -55,7 +55,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     }
 
     private void showDetailsPage(Article article) {
-        Intent intent = new Intent(context, Details2Activity.class);
+        Intent intent = new Intent(context, DetailsActivity.class);
         intent.putExtra("selectedArticle", article);
         context.startActivity(intent);
     }

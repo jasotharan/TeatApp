@@ -13,17 +13,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
+import java.io.IOException;
+import java.io.InputStream;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import sg.app.testapp.model.Article;
+import sg.app.testapp.model.LongArticle;
 
-public class Details2Activity extends AppCompatActivity {
+public class DetailsActivity extends AppCompatActivity {
     private Context mContext;
     private Article selectedArticle;
     private Button saveUser;
@@ -39,7 +42,7 @@ public class Details2Activity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        progressDialog = new ProgressDialog(Details2Activity.this);
+        progressDialog = new ProgressDialog(DetailsActivity.this);
         progressDialog.setMessage("Loading....");
         progressDialog.show();
 
@@ -51,22 +54,23 @@ public class Details2Activity extends AppCompatActivity {
         /*Create handle for the RetrofitInstance interface*/
         APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
 
-        Call<Article> call = apiInterface.getSelectedArticle("2");
-        call.enqueue(new Callback<Article>() {
+        Call<LongArticle> call = apiInterface.getSelectedArticle("2");
+        call.enqueue(new Callback<LongArticle>() {
             @Override
-            public void onResponse(Call<Article> call, Response<Article> response) {
+            public void onResponse(Call<LongArticle> call, Response<LongArticle> response) {
                 progressDialog.dismiss();
                 if (response.body() != null) {
-                  //  generateDataList(response.body());
+                    showLongDescription(response.body());
                 } else {
-                    Toast.makeText(Details2Activity.this, "null response ...Please try later!", Toast.LENGTH_SHORT).show();
+                    showLongDescription(getSampleData());
+                    Toast.makeText(DetailsActivity.this, "no response and this is sample data ...Please try later!", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<Article> call, Throwable t) {
+            public void onFailure(Call<LongArticle> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(Details2Activity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetailsActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -82,6 +86,10 @@ public class Details2Activity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void showLongDescription(LongArticle longArticle) {
+        userLongText.setText(longArticle.getText());
     }
 
     private void initUIComponents() {
@@ -132,5 +140,23 @@ public class Details2Activity extends AppCompatActivity {
         toolbar_edit.setVisibility(View.VISIBLE);
         toolbar_cancel.setVisibility(View.GONE);
 
+    }
+
+    public LongArticle getSampleData() {
+        String json = null;
+        try {
+            InputStream inputStream = mContext.getAssets().open("sampleLongArticle.json");
+            int size = inputStream.available();
+            byte[] buffer = new byte[size];
+            inputStream.read(buffer);
+            inputStream.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Gson gson = new Gson();
+        LongArticle longArticle = gson.fromJson(json, LongArticle.class);
+        return longArticle;
     }
 }
