@@ -57,15 +57,15 @@ public class MainActivity extends AppCompatActivity {
                     // save list in local session
                     CommonApi.saveStoresList(mContext, response.body());
 
-                } else if  (CommonApi.getStoresList(mContext)!=null){
+                } else if (CommonApi.getStoresList(mContext) != null) {
                     // network response null show last save data
                     Toast.makeText(MainActivity.this, "showing local session data", Toast.LENGTH_LONG).show();
                     generateDataList(CommonApi.getStoresList(mContext));
-                }else {
+                } else {
                     // get mock data and show for sample app
                     Toast.makeText(MainActivity.this, "showing mock for test app", Toast.LENGTH_LONG).show();
-                    generateDataList(StringUtil.getSampleList(mContext,"sampleList.json"));
-                    CommonApi.saveStoresList(mContext, StringUtil.getSampleList(mContext,"sampleList.json"));
+                    generateDataList(StringUtil.getSampleList(mContext, "sampleList.json"));
+                    CommonApi.saveStoresList(mContext, StringUtil.getSampleList(mContext, "sampleList.json"));
                 }
             }
 
@@ -73,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Call<List<Article>> call, Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(MainActivity.this, "showing mock for test app", Toast.LENGTH_LONG).show();
-                generateDataList(StringUtil.getSampleList(mContext,"sampleList.json"));
-                CommonApi.saveStoresList(mContext, StringUtil.getSampleList(mContext,"sampleList.json"));
+                generateDataList(StringUtil.getSampleList(mContext, "sampleList.json"));
+                CommonApi.saveStoresList(mContext, StringUtil.getSampleList(mContext, "sampleList.json"));
                 Toast.makeText(MainActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_LONG).show();
             }
         });

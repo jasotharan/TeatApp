@@ -1,7 +1,6 @@
 package sg.app.testapp;
 
 
-
 import java.util.List;
 
 import retrofit2.Call;

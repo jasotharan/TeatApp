@@ -17,8 +17,8 @@ import sg.app.testapp.model.Article;
 import sg.app.testapp.model.LongArticle;
 
 public class StringUtil {
-    public static String millisToDate(String dateMilli  ) {
-            String formattedDate = "";
+    public static String millisToDate(String dateMilli) {
+        String formattedDate = "";
 
         //creating Date from millisecond
         Date currentDate = new Date(Long.valueOf(dateMilli));
@@ -35,7 +35,7 @@ public class StringUtil {
         return formattedDate;
     }
 
-    public static ArrayList<Article> getSampleList(Context mContext,String finleNmae) {
+    public static ArrayList<Article> getSampleList(Context mContext, String finleNmae) {
         String json = null;
         try {
             InputStream inputStream = mContext.getAssets().open(finleNmae);

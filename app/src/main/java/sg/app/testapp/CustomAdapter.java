@@ -24,7 +24,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     private List<Article> dataList;
     private Context context;
 
-    public CustomAdapter(Context context,List<Article> dataList){
+    public CustomAdapter(Context context, List<Article> dataList) {
         this.context = context;
         this.dataList = dataList;
     }
@@ -33,7 +33,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
 
         public final View mView;
 
-        TextView txtTitle,userId,shortDescriptionTV;
+        TextView txtTitle, userId, shortDescriptionTV;
         private ImageView coverImage;
 
         CustomViewHolder(View itemView) {
@@ -67,8 +67,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
 
         String last_updated_date = dataList.get(position).getLast_update();
 
-        if(last_updated_date!=null){
-            holder.userId.setText(StringUtil.millisToDate(last_updated_date));}
+        if (last_updated_date != null) {
+            holder.userId.setText(StringUtil.millisToDate(last_updated_date));
+        }
 
         holder.shortDescriptionTV.setText(dataList.get(position).getShort_description());
 

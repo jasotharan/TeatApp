@@ -32,7 +32,7 @@ public class DetailsActivity extends AppCompatActivity {
     private Article selectedArticle;
     private Button saveUser;
     private ImageView userImageView;
-    private TextView userLongText,toolbar_edit,toolbar_cancel;
+    private TextView userLongText, toolbar_edit, toolbar_cancel;
     private EditText userLongEditText;
     ProgressDialog progressDialog;
 
@@ -124,7 +124,7 @@ public class DetailsActivity extends AppCompatActivity {
 
     public void editUser(View v) {
         // does something very interesting
-      //  Toast.makeText(mContext, "Edit", Toast.LENGTH_SHORT).show();
+        //  Toast.makeText(mContext, "Edit", Toast.LENGTH_SHORT).show();
         userLongEditText.setVisibility(View.VISIBLE);
         saveUser.setVisibility(View.VISIBLE);
         userLongText.setVisibility(View.GONE);
@@ -132,9 +132,11 @@ public class DetailsActivity extends AppCompatActivity {
         toolbar_cancel.setVisibility(View.VISIBLE);
         userLongEditText.setText(userLongText.getText());
 
-    } public void saveCancel(View v) {
+    }
+
+    public void saveCancel(View v) {
         // does something very interesting
-       // Toast.makeText(mContext, "cancel", Toast.LENGTH_SHORT).show();
+        // Toast.makeText(mContext, "cancel", Toast.LENGTH_SHORT).show();
         userLongEditText.setVisibility(View.GONE);
         saveUser.setVisibility(View.GONE);
         userLongText.setVisibility(View.VISIBLE);
