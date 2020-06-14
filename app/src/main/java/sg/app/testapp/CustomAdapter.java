@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import sg.app.testapp.model.Article;
+import sg.app.testapp.util.StringUtil;
 
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomViewHolder> {
@@ -63,7 +64,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     @Override
     public void onBindViewHolder(CustomViewHolder holder, final int position) {
         holder.txtTitle.setText(dataList.get(position).getTitle());
-        holder.userId.setText(dataList.get(position).getLast_update());
+
+        String last_updated_date = dataList.get(position).getLast_update();
+
+        if(last_updated_date!=null){
+            holder.userId.setText(StringUtil.millisToDate(last_updated_date));}
+
         holder.shortDescriptionTV.setText(dataList.get(position).getShort_description());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {

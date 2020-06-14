@@ -25,6 +25,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import sg.app.testapp.model.Article;
 import sg.app.testapp.model.LongArticle;
+import sg.app.testapp.util.StringUtil;
 
 public class DetailsActivity extends AppCompatActivity {
     private Context mContext;
@@ -62,7 +63,7 @@ public class DetailsActivity extends AppCompatActivity {
                 if (response.body() != null) {
                     showLongDescription(response.body());
                 } else {
-                    showLongDescription(getSampleData());
+                    showLongDescription(StringUtil.getSampleData(mContext));
                     Toast.makeText(DetailsActivity.this, "no response and this is sample data ...Please try later!", Toast.LENGTH_LONG).show();
                 }
             }
@@ -142,21 +143,5 @@ public class DetailsActivity extends AppCompatActivity {
 
     }
 
-    public LongArticle getSampleData() {
-        String json = null;
-        try {
-            InputStream inputStream = mContext.getAssets().open("sampleLongArticle.json");
-            int size = inputStream.available();
-            byte[] buffer = new byte[size];
-            inputStream.read(buffer);
-            inputStream.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        Gson gson = new Gson();
-        LongArticle longArticle = gson.fromJson(json, LongArticle.class);
-        return longArticle;
-    }
 }

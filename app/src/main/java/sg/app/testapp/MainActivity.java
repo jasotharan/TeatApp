@@ -22,6 +22,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import sg.app.testapp.model.Article;
+import sg.app.testapp.util.StringUtil;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -63,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
                 }else {
                     // get mock data and show for sample app
                     Toast.makeText(MainActivity.this, "showing mock for test app", Toast.LENGTH_LONG).show();
-                    generateDataList(getSampleList());
-                   // CommonApi.saveStoresList(mContext, getSampleList());
+                    generateDataList(StringUtil.getSampleList(mContext,"sampleList.json"));
+                    CommonApi.saveStoresList(mContext, StringUtil.getSampleList(mContext,"sampleList.json"));
                 }
             }
 
@@ -72,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Call<List<Article>> call, Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(MainActivity.this, "showing mock for test app", Toast.LENGTH_LONG).show();
-                generateDataList(getSampleList());
-                CommonApi.saveStoresList(mContext, getSampleList());
+                generateDataList(StringUtil.getSampleList(mContext,"sampleList.json"));
+                CommonApi.saveStoresList(mContext, StringUtil.getSampleList(mContext,"sampleList.json"));
                 Toast.makeText(MainActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_LONG).show();
             }
         });
@@ -90,24 +91,5 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
-    public ArrayList<Article> getSampleList() {
-        String json = null;
-        try {
-            InputStream inputStream = mContext.getAssets().open("sampleList.json");
-            int size = inputStream.available();
-            byte[] buffer = new byte[size];
-            inputStream.read(buffer);
-            inputStream.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        Gson gson = new Gson();
-        Article[] tags = gson.fromJson(json, Article[].class);
-        ArrayList<Article> tagsList = new ArrayList<>();
-        Collections.addAll(tagsList, tags);
-
-        return tagsList;
-    }
 }
